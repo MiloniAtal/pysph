@@ -638,6 +638,7 @@ cdef class Octree:
 
         #Use the serial method
         if(num_threads<2):
+            self._next_pid = 0
             for i from 0<=i<num_particles:
                 indices_ptr.push_back(i)
             self.depth = self._c_build_tree(pa_wrapper, indices_ptr, self.root.xmin,
