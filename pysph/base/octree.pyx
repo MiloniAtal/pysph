@@ -460,7 +460,6 @@ cdef class Octree:
                 cumulative_map[tid][oct_id] += 1             
 
         if(next_level_nodes.empty()):
-            self.pids = p_indices
             return 2
         else:
             return self._c_build_tree_bfs(pa, p_indices, next_level_nodes, 1)
@@ -566,7 +565,6 @@ cdef class Octree:
         del level_nodes
 
         if (next_level_nodes.size() == 0):
-            self.pids = p_indices
             return (level+2)
         else:
             return self._c_build_tree_bfs(pa,  p_indices, next_level_nodes, level+1)
