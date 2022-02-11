@@ -99,7 +99,7 @@ cdef class Octree:
             vector[u_int]* indices, double* xmin, double length,
             cOctreeNode* node, int level) nogil
 
-    cdef int _c_build_tree_level1(self, NNPSParticleArrayWrapper pa,
+    cdef int _c_build_tree_level1(self, NNPSParticleArrayWrapper pa, u_int* p_indices,
              double* xmin, double length, cOctreeNode* node, int num_threads) nogil    
     
     cdef int _c_build_tree_bfs(self, NNPSParticleArrayWrapper pa,

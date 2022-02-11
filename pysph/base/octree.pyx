@@ -357,8 +357,8 @@ cdef class Octree:
     
     @cython.cdivision(True)
     @cython.boundscheck(False) 
-    cdef int _c_build_tree_level1(self, NNPSParticleArrayWrapper pa, double* xmin, double length,
-            cOctreeNode* node, int num_threads) nogil:
+    cdef int _c_build_tree_level1(self, NNPSParticleArrayWrapper pa, u_int* p_indices,
+            double* xmin, double length, cOctreeNode* node, int num_threads) nogil:
 
         cdef double* src_x_ptr = pa.x.data
         cdef double* src_y_ptr = pa.y.data
@@ -384,7 +384,6 @@ cdef class Octree:
             node.is_leaf = True
             return 1
 
-        cdef u_int* p_indices = self.pids
         cdef vector[u_int]* child_indices = new vector[u_int](n)
         cdef vector[vector[int]] cumulative_map = vector[vector[int]](num_threads)
         cdef vector[vector[double]] threads_hmax = vector[vector[double]](num_threads)
@@ -626,7 +625,7 @@ cdef class Octree:
             self.method = 1
             self.root.start_index = 0
             self.root.num_particles = num_particles
-            self.depth = self._c_build_tree_level1(pa_wrapper, self.root.xmin,
+            self.depth = self._c_build_tree_level1(pa_wrapper, self.pids, self.root.xmin,
                     self.root.length, self.root, num_threads)
 
         #Use the serial method
